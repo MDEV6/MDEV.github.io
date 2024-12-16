@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Art Animal</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Animal pixel art
+    const animalSize = 50;
+    const animal = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      width: animalSize,
+      height: animalSize,
+      color: 'brown', // Color of the animal
+      draw: function() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      },
+      move: function(mouseX, mouseY) {
+        this.x = mouseX - this.width / 2;
+        this.y = mouseY - this.height / 2;
+      }
+    };
+
+    // Update canvas
+    function update() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
+      animal.draw(); // Draw the animal
+      requestAnimationFrame(update); // Keep updating
+    }
+
+    // Mouse move event
+    canvas.addEventListener('mousemove', (event) => {
+      animal.move(event.clientX, event.clientY); // Move the animal based on mouse position
+    });
+
+    update(); // Start the animation loop
+  </script>
+</body>
+</html>
